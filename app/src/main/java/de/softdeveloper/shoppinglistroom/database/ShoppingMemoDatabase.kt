@@ -8,7 +8,7 @@ abstract class ShoppingMemoDatabase: RoomDatabase() {
 
     abstract fun shoppingMemoDao(): ShoppingMemoDao
 
-    object Facrory{
+    object Factory{
         private var instance: ShoppingMemoDatabase? = null
 
         fun getInstance(context:Context): ShoppingMemoDatabase{
