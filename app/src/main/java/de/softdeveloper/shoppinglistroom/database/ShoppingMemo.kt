@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class ShoppingMemo(
     var quantity:Int,
     var product: String,
-    @ColumnInfo(name =  "selected") var isSelected: Boolean
+    @ColumnInfo(name =  "selected") var isSelected: Boolean = false
 ) {
     @PrimaryKey(autoGenerate = true)
     var id:Long = 0
