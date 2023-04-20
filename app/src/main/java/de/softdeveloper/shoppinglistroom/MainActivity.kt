@@ -2,7 +2,6 @@ package de.softdeveloper.shoppinglistroom
 
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -20,6 +19,7 @@ import de.softdeveloper.shoppinglistroom.database.ShoppingMemo
 import de.softdeveloper.shoppinglistroom.databinding.ActivityMainBinding
 import de.softdeveloper.shoppinglistroom.databinding.DialogEditShoppingMemoBinding
 import de.softdeveloper.shoppinglistroom.viewmodel.ShoppingMemoViewModel
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class MainActivity : AppCompatActivity() {
 
@@ -142,42 +142,58 @@ class MainActivity : AppCompatActivity() {
                     actionState,
                     isCurrentlyActive
                 )
+
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addBackgroundColor(Color.LTGRAY)
+                    .addSwipeRightActionIcon(R.drawable.ic_delete_black_24dp)
+                    .addSwipeLeftActionIcon(R.drawable.ic_edit_black_24dp)
+                    .create()
+                    .decorate()
+
                 // Version ohne SwipeDecorator
-                val itemView = viewHolder.itemView
-                val background = ColorDrawable(Color.LTGRAY)
-                val iconDelete = getDrawable(R.drawable.ic_delete_black_24dp)
-                val iconEdit = getDrawable(R.drawable.ic_edit_black_24dp)
-                val backgroundCornerOffset = 20
-                val iconMargin = (itemView.height - iconEdit!!.intrinsicHeight) / 2
-                val iconTop =
-                    itemView.top + (itemView.height - iconEdit.intrinsicHeight) / 2
-                val iconBottom = iconTop + iconEdit.intrinsicHeight
-                if (dX > 0) { // Swiping to the right
-                    val iconLeft =
-                        itemView.left + iconMargin + iconDelete!!.intrinsicWidth
-                    val iconRight = itemView.left + iconMargin
-                    iconDelete.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    background.setBounds(
-                        itemView.left,
-                        itemView.top,
-                        itemView.left + dX.toInt() + backgroundCornerOffset,
-                        itemView.bottom
-                    )
-                } else if (dX < 0) { // Swiping to the left
-                    val iconLeft =
-                        itemView.right - iconMargin - iconEdit!!.intrinsicWidth
-                    val iconRight = itemView.right - iconMargin
-                    iconEdit.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    background.setBounds(
-                        itemView.right + dX.toInt() - backgroundCornerOffset,
-                        itemView.top, itemView.right, itemView.bottom
-                    )
-                } else { // view is unSwiped
-                    background.setBounds(0, 0, 0, 0)
-                }
-                background.draw(c)
-                iconDelete!!.draw(c)
-                iconEdit!!.draw(c)
+//                val itemView = viewHolder.itemView
+//                val background = ColorDrawable(Color.LTGRAY)
+//                val iconDelete = getDrawable(R.drawable.ic_delete_black_24dp)
+//                val iconEdit = getDrawable(R.drawable.ic_edit_black_24dp)
+//                val backgroundCornerOffset = 20
+//                val iconMargin = (itemView.height - iconEdit!!.intrinsicHeight) / 2
+//                val iconTop =
+//                    itemView.top + (itemView.height - iconEdit.intrinsicHeight) / 2
+//                val iconBottom = iconTop + iconEdit.intrinsicHeight
+//                if (dX > 0) { // Swiping to the right
+//                    val iconLeft =
+//                        itemView.left + iconMargin + iconDelete!!.intrinsicWidth
+//                    val iconRight = itemView.left + iconMargin
+//                    iconDelete.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+//                    background.setBounds(
+//                        itemView.left,
+//                        itemView.top,
+//                        itemView.left + dX.toInt() + backgroundCornerOffset,
+//                        itemView.bottom
+//                    )
+//                } else if (dX < 0) { // Swiping to the left
+//                    val iconLeft =
+//                        itemView.right - iconMargin - iconEdit!!.intrinsicWidth
+//                    val iconRight = itemView.right - iconMargin
+//                    iconEdit.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+//                    background.setBounds(
+//                        itemView.right + dX.toInt() - backgroundCornerOffset,
+//                        itemView.top, itemView.right, itemView.bottom
+//                    )
+//                } else { // view is unSwiped
+//                    background.setBounds(0, 0, 0, 0)
+//                }
+//                background.draw(c)
+//                iconDelete!!.draw(c)
+//                iconEdit!!.draw(c)
             }
 
         })
